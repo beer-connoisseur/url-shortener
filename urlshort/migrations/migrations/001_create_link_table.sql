@@ -6,8 +6,8 @@ CREATE SCHEMA IF NOT EXISTS link;
 CREATE TABLE link.links
 (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    original_url VARCHAR(255) UNIQUE NOT NULL,
-    short_url VARCHAR(10) UNIQUE NOT NULL,
+    original_link VARCHAR(255) UNIQUE NOT NULL,
+    short_link VARCHAR(10) UNIQUE NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 -- +goose StatementEnd

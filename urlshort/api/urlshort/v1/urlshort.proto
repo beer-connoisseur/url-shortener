@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package urlshort.v1;
+
+option go_package = "pkg/generated/urlshort/api/urlshort/v1;urlshort";
+
+import "google/protobuf/descriptor.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+service Urlshort {
+  rpc ShortenLink(ShortenLinkRequest) returns (ShortenLinkResponse) {
+    option (google.api.http) = {
+      post: "/v1/urlshort/shorten"
+      body: "*"
+    };
+  }
+
+  rpc ExpandLink(ExpandLinkRequest) returns (ExpandLinkResponse) {
+    option (google.api.http) = {
+      get: "/v1/urlshort/expand/{link}"
+    };
+  }
+}
+
+message ShortenLinkRequest {
+  string link = 1 [(validate.rules).string = {uri: true, min_len: 1}];
+}
+
+message ShortenLinkResponse {
+  string link = 1;
+}
+
+message ExpandLinkRequest {
+  string link = 1 [(validate.rules).string = {len: 10}];
+}
+
+message ExpandLinkResponse {
+  string link = 1;
+}

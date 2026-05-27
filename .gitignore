@@ -1,3 +1,5 @@
 .idea/
 bin/
 pkg/generated/
+mocks/
+coverage.out

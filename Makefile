@@ -42,21 +42,18 @@ generate-proto: bin/easyp bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-ge
 	PATH="$(PATH):$(LOCAL_BIN)" && $(EASYP_BIN) mod download && $(EASYP_BIN) generate
 
 generate-mocks: bin/mockgen
-	PATH="$(PATH):$(LOCAL_BIN)" go generate ./...
-	$(LOCAL_BIN)/mockgen -destination=internal/bot/client/mocks/mock_generated_scrapper_client.go -package=mocks gitlab.education.tbank.ru/backend-academy-go-2025/homeworks/link-tracker/generated/api/scrapper ScrapperClient
-	$(LOCAL_BIN)/mockgen -destination=internal/scrapper/client/mocks/mock_generated_bot_client.go -package=mocks gitlab.education.tbank.ru/backend-academy-go-2025/homeworks/link-tracker/generated/api/bot BotClient
-	$(LOCAL_BIN)/mockgen -destination=internal/scrapper/controller/mocks/mock_generated_scrapper_server.go -package=mocks gitlab.education.tbank.ru/backend-academy-go-2025/homeworks/link-tracker/generated/api/scrapper ScrapperServer
+	PATH="$(PATH):$(LOCAL_BIN)" cd ./urlshort && go generate ./...
 
 .PHONY: build
 build: generate-proto
 	@mkdir -p $(LOCAL_BIN)
-	go build -o ./bin/app .urlshort/cmd/urlshort
+	go build -o ./bin/app ./urlshort/cmd/app
 
 # test: run all tests
 .PHONY: test
 test: generate-mocks
-	@go test -coverpkg='./urlshort/...' --race -count=1 -coverprofile='$(COVERAGE_FILE)' ./...
-	@go tool cover -func='$(COVERAGE_FILE)' | grep ^total | tr -s '\t'
+	@cd ./urlshort && go test -coverpkg='./...' --race -count=1 -coverprofile='$(COVERAGE_FILE)' ./...
+	@cd ./urlshort && go tool cover -func='$(COVERAGE_FILE)' | grep ^total | tr -s '\t'
 
 bin/golangci-lint:
 	@echo "Installing golangci-lint..."
@@ -66,7 +63,7 @@ bin/golangci-lint:
 .PHONY: lint
 lint: bin/golangci-lint
 	@echo 'Running linter on files...'
-	$(GOLANGCI_BIN) run \
-	--config=.golangci.yaml \
+	cd ./urlshort && $(GOLANGCI_BIN) run \
+	--config=../.golangci.yaml \
 	--max-issues-per-linter=0 \
 	--max-same-issues=0

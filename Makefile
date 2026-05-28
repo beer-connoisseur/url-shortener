@@ -49,11 +49,15 @@ build: generate-proto
 	@mkdir -p $(LOCAL_BIN)
 	go build -o ./bin/app ./urlshort/cmd/app
 
-# test: run all tests
+# test: run unit tests
 .PHONY: test
 test: generate-mocks
 	@cd ./urlshort && go test -coverpkg='./...' --race -count=1 -coverprofile='$(COVERAGE_FILE)' ./...
 	@cd ./urlshort && go tool cover -func='$(COVERAGE_FILE)' | grep ^total | tr -s '\t'
+
+.PHONY: integration-test
+integration-test:
+	@cd ./integration-test && go test --race -count=1 ./...
 
 bin/golangci-lint:
 	@echo "Installing golangci-lint..."

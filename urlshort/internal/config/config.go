@@ -15,12 +15,13 @@ type (
 		}
 
 		PG struct {
-			Host     string `env:"POSTGRES_HOST" envDefault:"localhost"`
-			Port     string `env:"POSTGRES_PORT" envDefault:"5432"`
-			DB       string `env:"POSTGRES_DB" envDefault:"urls"`
-			User     string `env:"POSTGRES_USER" envDefault:"user"`
-			Password string `env:"POSTGRES_PASSWORD" envDefault:"12345"`
-			MaxConn  string `env:"POSTGRES_MAX_CONN" envDefault:"10"`
+			Host       string `env:"POSTGRES_HOST" envDefault:"localhost"`
+			Port       string `env:"POSTGRES_PORT" envDefault:"5432"`
+			DB         string `env:"POSTGRES_DB" envDefault:"urls"`
+			User       string `env:"POSTGRES_USER" envDefault:"user"`
+			Password   string `env:"POSTGRES_PASSWORD" envDefault:"12345"`
+			MaxConn    string `env:"POSTGRES_MAX_CONN" envDefault:"10"`
+			AccessType string `env:"ACCESS_TYPE" envDefault:"POSTGRES"`
 		}
 	}
 )

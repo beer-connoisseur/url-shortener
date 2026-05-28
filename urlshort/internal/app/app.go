@@ -16,12 +16,12 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
-	repository "urlshort/internal/repository/urlshort"
 
 	urlshortGenerated "pkg/generated/urlshort/api/urlshort/v1"
 	"urlshort/internal/config"
 	"urlshort/internal/controller"
 	"urlshort/internal/controller/urlshort"
+	repository "urlshort/internal/repository/urlshort"
 	urlshortService "urlshort/internal/usecase/urlshort"
 	"urlshort/migrations"
 )

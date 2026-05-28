@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"go.uber.org/zap"
+
 	"urlshort/internal/entity"
 )
 
